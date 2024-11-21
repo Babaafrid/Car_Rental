@@ -1,17 +1,16 @@
-import { Col, Row, Form, Input } from 'antd'
+import { Col, Row, Form, Input } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import DefaultLayout from '../components/DefaultLayout'
-import Spinner from '../components/Spinner'
-import {CloseSquareOutlined} from '@ant-design/icons';
-import { useParams,Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import DefaultLayout from "../components/DefaultLayout";
+import Spinner from "../components/Spinner";
+import { CloseSquareOutlined } from "@ant-design/icons";
+import { useParams, Link } from "react-router-dom";
 import { addCar, editCar, getAllCars } from "../redux/actions/carsActions";
 function EditCar() {
-
   const { cars } = useSelector((state) => state.carsReducer);
-  const dispatch = useDispatch()
-  const { loading } = useSelector(state => state.alertsReducer)
-  const [car, setCar] = useState()
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.alertsReducer);
+  const [car, setCar] = useState();
   const [totalcars, settotalcars] = useState([]);
   const { carid } = useParams();
 
@@ -19,30 +18,34 @@ function EditCar() {
     if (cars.length == 0) {
       dispatch(getAllCars());
     } else {
-      settotalcars(cars)
+      settotalcars(cars);
       setCar(cars.find((o) => o._id === carid));
     }
   }, [cars]);
 
-
   function onFinish(values) {
     values._id = car._id;
 
-    dispatch(editCar(values))
-    console.log(values)
+    dispatch(editCar(values));
+    console.log(values);
   }
 
   return (
     <DefaultLayout>
-      {loading && (<Spinner />)}
-      <div className='d-flex justify-content-between p-2 mt-2'>
-      <br />
-      <div className='mr-4'>
-      <Link to={`/admin`}><CloseSquareOutlined className="mr-0" style={{color:'red', cursor: "pointer"}}/></Link>
+      {loading && <Spinner />}
+      <div className="d-flex justify-content-between p-2 mt-2">
+        <br />
+        <div className="mr-4">
+          <Link to={`/admin`}>
+            <CloseSquareOutlined
+              className="mr-0"
+              style={{ color: "red", cursor: "pointer" }}
+            />
+          </Link>
+        </div>
       </div>
-      </div>
-      <Row justify='center mt-3'>
-        <Col lg={12} sm={24} xs={24} className='p-2'>
+      <Row justify="center mt-3">
+        <Col lg={12} sm={24} xs={24} className="p-2">
           {totalcars.length > 0 && (
             <Form
               initialValues={car}
@@ -96,9 +99,8 @@ function EditCar() {
           )}
         </Col>
       </Row>
-
     </DefaultLayout>
-  )
+  );
 }
 
-export default EditCar
+export default EditCar;

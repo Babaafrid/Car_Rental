@@ -1,68 +1,92 @@
-import React from 'react'
-import { Menu, Dropdown, Button, Space, Row, Col } from "antd";
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Layout, Menu, Dropdown, Button } from "antd";
+import { Link } from 'react-router-dom';
+import { HomeOutlined, BookOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+
+const { Header, Content } = Layout;
+
 function DefaultLayout(props) {
-  const user = JSON.parse(localStorage.getItem('user'))
-  const menu = (
+  const user = JSON.parse(localStorage.getItem('user'));
+  const adminMenu = (
     <Menu>
-      <Menu.Item>
-        <a
-
-          href="/"
-        >
-          Home
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a
-
-          href="/userbookings"
-        >
-          Bookings
-        </a>
-      </Menu.Item>
-      {/* <Menu.Item>
-        <a
-
-          href="/admin"
-        >
-          Admin
-        </a>
-      </Menu.Item> */}
-      <Menu.Item onClick={() => {
-        localStorage.removeItem('user');
-        window.location.href = '/login'
-      }}>
-        <li style={{ color: 'orangered' }}>Logout</li>
+      <Menu.Item
+        key="logout"
+        icon={<LogoutOutlined />}
+        onClick={() => {
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+        }}
+      >
+        <span style={{ color: 'orangered' }}>Logout</span>
       </Menu.Item>
     </Menu>
   );
+
+  const userMenu = (
+    <Menu>
+      <Menu.Item key="home" icon={<HomeOutlined />}>
+        <Link to="/">Home</Link>
+      </Menu.Item>
+      <Menu.Item key="bookings" icon={<BookOutlined />}>
+        <Link to="/userbookings">Bookings</Link>
+      </Menu.Item>
+      <Menu.Item
+        key="logout"
+        icon={<LogoutOutlined />}
+        onClick={() => {
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+        }}
+      >
+        <span style={{ color: 'orangered' }}>Logout</span>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
-    <div className='wallpaper'>
-      <div className='header box1'>
-        <Row gutter={16} justify='center'>
-          <Col lg={20} sm={24} xs={24}>
-            {user.username != "Baba Afrid" && (<div className='d-flex justify-content-between'>
-              <h1><b><Link to='/' style={{ color: 'orangered' }}> AM Cars</Link></b></h1>
-              <Dropdown overlay={menu} placement="bottomCenter">
-                <Button>{user.username}</Button>
-              </Dropdown>
-            </div>)}
-            {user.username == "Baba Afrid" && (<div className='d-flex justify-content-between'>
-              <h1><b><Link to='/admin' style={{ color: 'orangered' }}> AM Cars</Link></b></h1>
-              <Button onClick={() => {
-                localStorage.removeItem('user');
-                window.location.href = '/login'
-              }}>Logout</Button>
-            </div>)}
-          </Col>
-        </Row>
-      </div>
-      <div className='content'>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#001529',
+          padding: '0 20px',
+        }}
+      >
+        <div style={{ color: 'orangered', fontSize: '20px', fontWeight: 'bold' }}>
+          <Link
+            to={user.username === "Baba Afrid" ? "/admin" : "/"}
+            style={{ color: 'orangered', textDecoration: 'none' }}
+          >
+          AM Cars
+          </Link>
+        </div>
+
+        <Dropdown
+          overlay={user.username === "Baba Afrid" ? adminMenu : userMenu}
+          placement="bottomRight"
+        >
+          <Button
+            type="primary"
+            icon={<UserOutlined />}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: '#1890ff',
+              borderColor: '#1890ff',
+            }}
+          >
+            {user?.username || 'User'}
+          </Button>
+        </Dropdown>
+      </Header>
+
+      <Content style={{ padding: '20px', backgroundColor: '#f0f2f5' }}>
         {props.children}
-      </div>
-    </div>
-  )
+      </Content>
+    </Layout>
+  );
 }
 
-export default DefaultLayout
+export default DefaultLayout;

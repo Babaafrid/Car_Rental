@@ -26,7 +26,6 @@ function Login() {
             src="https://c4.wallpaperflare.com/wallpaper/191/217/135/car-black-car-rolls-royce-phantom-vehicle-wallpaper-preview.jpg"
             alt=""
           />
-          {/* <h1 className='login-logo'>AMCARS</h1> */}
         </Col>
         <Col lg={8} className="text-left p-5">
           <Form
@@ -47,7 +46,12 @@ function Login() {
               label="Password"
               rules={[{ required: true }]}
             >
-              <Input />
+              <Input.Password
+                style={{
+                  padding: 0,
+                  fontSize: "16px",
+                }}
+              />
             </Form.Item>
             <button className="btn1 mt-2 mb-3">Login</button>
             <br />

@@ -8,7 +8,7 @@ export const userLogin=(reqObj)=>async dispatch=>{
     try {
         const response = await axios.post('/api/users/login' , reqObj)
         localStorage.setItem('user' , JSON.stringify(response.data))
-        if(response.data.username=="Baba Afrid"){
+        if(response.data.username==="Baba Afrid"){
             message.success('Admin Login success')
         dispatch({type: 'LOADING' , payload:false})
         setTimeout(() => {
@@ -41,7 +41,6 @@ export const userRegister=(reqObj)=>async dispatch=>{
         message.success('Registration successfull')
         setTimeout(() => {
             window.location.href='/login'
-         
         }, 500);
        
         dispatch({type: 'LOADING' , payload:false})

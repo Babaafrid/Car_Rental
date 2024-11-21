@@ -19,7 +19,6 @@ function UserBookings() {
   return (
     <DefaultLayout>
       {loading && <Spinner />}
-      {/* <h3 className="text-center mt-2">My Bookings</h3> */}
       <div className="d-flex justify-content-between p-2 mt-2">
         <br />
         <div className="mr-4">

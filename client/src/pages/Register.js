@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../redux/actions/userActions";
 import Spinner from "../components/Spinner";
 import AOS from "aos";
-import "aos/dist/aos.css"; // You can also use <link> for styles
-// ..
+import "aos/dist/aos.css";
+
 AOS.init();
 function Register() {
   const dispatch = useDispatch();
@@ -27,7 +27,6 @@ function Register() {
             src="https://c4.wallpaperflare.com/wallpaper/191/217/135/car-black-car-rolls-royce-phantom-vehicle-wallpaper-preview.jpg"
             alt=""
           />
-          {/* <h1 className='login-logo'>AMCARS</h1> */}
         </Col>
         <Col lg={8} className="text-left p-5">
           <Form
@@ -48,14 +47,24 @@ function Register() {
               label="Password"
               rules={[{ required: true }]}
             >
-              <Input />
+              <Input.Password
+                style={{
+                  padding: 0,
+                  fontSize: "16px",
+                }}
+              />
             </Form.Item>
             <Form.Item
               name="cpassword"
               label="Confirm Password"
               rules={[{ required: true }]}
             >
-              <Input />
+              <Input.Password
+                style={{
+                  padding: 0,
+                  fontSize: "16px",
+                }}
+              />
             </Form.Item>
             <button className="btn1 mt-2 mb-3">Register</button>
             <br />
